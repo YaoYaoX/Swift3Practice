@@ -1,0 +1,10 @@
+1. 随机数
+
+    // 使用GameplayKit
+    import GameplayKit
+
+    // 打乱数组顺序
+    GKRandomSource.sharedRandom().arrayByShufflingObjects(in: countryFlags) as! [String]
+
+    // 获取随机数
+    GKRandomSource.sharedRandom().nextInt(upperBound: 3)

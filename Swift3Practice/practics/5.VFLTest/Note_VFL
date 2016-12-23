@@ -1,0 +1,46 @@
+1. VFL:Visual Format Language
+
+    let label1 = UILabel()
+    // 手动添加约束
+    label1.translatesAutoresizingMaskIntoConstraints = false
+    label1.backgroundColor = UIColor.blue
+    label1.text = "THIS"
+    ...
+
+    // 1. 水平方向约束
+    let viewsDictionary = ["label1": label1, "label2": label2, "label3": label3, "label4": label4, "label5": label5]
+    for label in viewsDictionary.keys {
+        // 1.1 通过VFL创建约束
+            // withVisualFormat：VFL字符串
+            // metrics：自定义的一些参数，用于VFL中
+            // views:VFL中涉及到的view，用key表示
+        let constraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[\(label)]|", options: [], metrics: nil, views: viewsDictionary)
+        // 1.2 添加到对应view上
+        view.addConstraints(constraints)
+    }
+
+    // 2. 竖直方向约束
+        // VFL:解释
+        // ｜：边缘  －：竖直  H：水平方向  V：竖直方向
+        //（==value)：值   @value:优先级，1-1000，默认1000
+        // [viewKey]:从viewsDictionary获取到的view   -value-:间距
+    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[label1(64@999)]-0-[label2(==label1)]-0-[label3(==label1)]-0-[label4(==label1)]-0-[label5(==label1)]", options: [], metrics: nil, views: viewsDictionary))
+
+
+2. Anchor的使用，类似masonry，widthAnchor, heightAnchor, topAnchor, bottomAnchor, leftAnchor, rightAnchor, leadingAnchor, trailingAnchor, centerXAnchor, and centerYAnchor
+
+    var preLabel:UILabel?
+
+    for label in [label1, label2, label3, label4, label5] {
+
+        label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 64).isActive = true
+
+        if preLabel != nil {
+            label.topAnchor.constraint(equalTo: preLabel!.bottomAnchor).isActive = true
+        } else {
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 64).isActive = true
+        }
+
+        preLabel = label
+    }

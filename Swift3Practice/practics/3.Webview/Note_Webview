@@ -1,0 +1,24 @@
+1. 代理WKNavigationDelegate
+
+func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    // 决定是否访问该网址 navigationAction.request.url
+    // 必须调用，不然crash
+decisionHandler(.allow)
+}
+
+func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+    // navigationResponse.response.url网页访问成功后
+    // 必须调用，不然crash
+decisionHandler(.allow)
+}
+
+2. toolbarItems的使用
+    // 往toolbar上添加items
+    self.toolbarItems = [progressBtn, spacer, refresh];
+    // 显示toolbar
+    navigationController?.isToolbarHidden = false
+
+
+3. WKWebview & UIWebview
+
+    TODO:

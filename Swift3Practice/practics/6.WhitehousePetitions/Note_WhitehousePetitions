@@ -1,0 +1,49 @@
+1. storyboard的使用
+
+    1.1 新建storyboard，class关联已存在的类
+
+    1.2 通过UIStoryboard创建新类
+
+        // 1.2.1 bundle: nil时默认在当前bundle下
+        let storyboard = UIStoryboard(name: "WHPetitionsController", bundle: nil)
+
+        // 1.2.2 加载入口控制器：每个storyboard都有一个入口控制器
+        let whpc = storyboard.instantiateInitialViewController() as? WHPetitionsController
+
+        // 1.2.3 通过StoryboardId加载控制器：对storyboard中的控制器设置StoryboardId
+        let whpc = storyboard.instantiateViewController(withIdentifier: "WHPTabID") as? WHPetitionsController
+
+        // 1.2.4 直接通过WHPetitionsController()方式创建的控制器不会从storyboard加载view
+
+2. JSON：Javascript Object Notation
+
+    2.1 格式(http://www.json.org)
+
+        2.1.1 dictionary/object: {string:value, string:value, ...}
+        2.1.2 array: [value, value, value ...]
+        2.1.3 value: string、number、object、array、true、false、null
+
+    2.2 解析json
+
+        2.2.1 解析data
+            let data = try? Data(contentsOf: url)
+            let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+
+        2.2.3 解析jsonString
+            let jsonString = "[\"value\",\"value\"]"
+            let object2 = try? JSONSerialization.jsonObject(with: jsonString.data(using: .utf8)!, options: .allowFragments)
+
+    2.3 解析工具
+
+        2.3.1 json-swift: https://github.com/owensd/json-swift
+
+        2.3.1 SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON
+
+3. 通过WKWebview加载文字
+
+4. loadview中切换view
+
+    override func loadView() {
+        webView = WKWebView()
+        view = webView
+    }

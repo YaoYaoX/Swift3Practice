@@ -1,0 +1,34 @@
+1. oc & swift 的 load、initialize对比
+
+2. UIWebview & WKWebview 性能对比
+
+    static let swizzle = {
+
+        let classType = UIViewController.self
+        let originSEL = #selector(viewWillAppear(_:))
+        let swizzleSEL = #selector(custom_viewWillAppear(_:))
+
+        let originMTH = class_getInstanceMethod(classType, originSEL)
+        let swizzleMTH = class_getInstanceMethod(classType, swizzleSEL)
+
+        let originIMP = class_getMethodImplementation(classType, originSEL)
+        let swizzleIMP = class_getMethodImplementation(classType, swizzleSEL)
+
+        let didAddMTH = class_addMethod(classType, originSEL, swizzleIMP, method_getTypeEncoding(swizzleMTH))
+        if didAddMTH {
+        class_replaceMethod(classType, swizzleSEL, originIMP, method_getTypeEncoding(originMTH))
+        } else {
+        method_exchangeImplementations(originMTH, swizzleMTH)
+        }
+    }
+
+
+
+    func custom_viewWillAppear(_ animated: Bool) {
+        self.custom_viewWillAppear(animated)
+        view.backgroundColor = UIColor.white
+    }
+
+3. VFL
+
+4. ? !

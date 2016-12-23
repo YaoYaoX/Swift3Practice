@@ -1,0 +1,40 @@
+
+1. selector使用
+
+    #selector(funcName)
+
+2. NSClassFromString的使用
+
+    // 控制器类名
+    let controllerName = "controllerName"
+    if !(controllerName.isEmpty) {
+
+    // 项目名
+    let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as! String
+
+    // 通过“项目名.类名”获取类实例
+    let objClass = NSClassFromString(appName+"."+controllerName) as! UIViewController.Type
+
+    // 初始化实例
+    let vc = objClass.init();
+
+    self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+3. 获取项目资源
+
+    // 资源路径
+    let resourcePath = Bundle.main.resourcePath
+
+    // 文件管理器
+    let fm = FileManager.default
+
+    // 获取文件目录
+    if let files = try? fm.contentsOfDirectory(atPath: resourcePath ?? ""){
+    }
+
+4. bug:加载出来的笔记文本不显示
+
+    原因：文本的numberOfline未设置，导致只能显示一行，而第一行刚好是换行
+
+    修改：设置numberOfline ＝ 0；

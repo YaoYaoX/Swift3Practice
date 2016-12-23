@@ -1,0 +1,84 @@
+1. 拼写是否正确：UITextChecker.rangeOfMisspelledWord
+
+    let checker = UITextChecker()
+    let range = NSMakeRange(0, word.utf16.count)
+    let miss = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+    // 有location则拼写错误
+    return miss.location == NSNotFound
+
+2. Closure使用
+
+    var array = [3,0,2,5,7,4,6,3,1,8]
+
+    // 0. blocks是引用类型
+    // 1. 直接传递方法名，方法也即是带名字的block
+    array.sort(by: sortFunc)
+
+    // 2. 传递block
+    // block语法:in用于分隔定义与实现
+    // { (parm1: Type1, parm2: Type2...) -> return returnType in
+    //    statements
+    // }
+    array.sort(by: { (num1: Int, num2: Int) -> Bool in
+        return num1 > num2
+    })
+
+    // 3. 从上下文判断类型：省略参数/返回值类型
+    array.sort(by: {num1,num2 in return num1 > num2})
+
+    // 4. 单行表达式隐含return，可省略
+    array.sort(by: {num1,num2 in num1 > num2})
+
+    // 5. 简短参数，$0、$1,$2,$3...代替第一个、第二个...参数，只留执行提，其他可省略
+    array.sort(by: {$0 > $1})
+
+    // 6. 更简短：Operator Methods，全省略，只留一个运算符
+    array.sort(by: > )
+
+    // 7.Trailing Closures
+    // 当方法的最后一个参数为block时，可直接将block参数放在方法体后面
+    testBLockParam(num1: 1, num2: 2, block1: sortFunc){ value1 in return value1 > 5 }
+
+    // 8. Trailing Closures
+    // 当方法的唯一参数是block时，()可省略
+    testOneBLockParam{ value1 in return value1 > 5 }
+
+    // 9. Escaping Closures
+    // 当传入方法的block参数在方法执行完后才会调用时，需要在block类型前添加@escaping
+    // 典型使用场景：异步执行后的回调
+    // 带@escaping的block引用self的成员时，需明确调用 self.成员，不可省略self;不带@escaping的block则可以
+    var completionHandlers: [() -> Void] = []
+    func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+        // 只保存了，在该方法体return后才会执行
+        completionHandlers.append(completionHandler)
+    }
+    func someFunctionWithNonescapingClosure(closure: () -> Void) {
+        // 立即执行
+        closure()
+    }
+
+    class SomeClass {
+        var x = 10
+        func doSomething() {
+        someFunctionWithEscapingClosure { self.x = 100 }
+        someFunctionWithNonescapingClosure { x = 200 }
+        }
+    }
+
+    let instance = SomeClass()
+    instance.doSomething()
+    print(instance.x)
+    // Prints "200"
+
+    completionHandlers.first?()
+    print(instance.x)
+    // Prints "100”
+
+
+    // 10. Capture list：解决循环强引用
+    // 语法: 将会被引用的let、var置于[]中，并用unowned、weak修饰
+    // weak对象一定是可选类型，当对象释放时会被自动置为nil
+    // { [unowned instance, weak weakInstance = instance] (parm1: Type1, parm2: Type2...) -> return returnType in
+    //    statements
+    // }
+
