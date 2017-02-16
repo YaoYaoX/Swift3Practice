@@ -1,0 +1,168 @@
+1. 学习资料
+
+    App Extension Programming Guide(官方文档)
+    https://developer.apple.com/library/content/documentation/General/Conceptual/ExtensibilityPG/index.html
+
+    WWDC2014之App Extensions学习笔记(相关概念)
+    http://www.cocoachina.com/ios/20140627/8960.html
+
+    谈谈iOS 8和OS X 10.10的Extension
+    http://www.cocoachina.com/ios/20140620/8891.html
+
+    iOS开发系列--App扩展开发(Today开发demo)
+    http://www.cnblogs.com/kenshincui/p/5644803.html
+
+    extension相当于小插件，可以在不打开containing app的情况下，直接在host app中使用extension实现的功能
+
+2. extension、containing app、 host app
+
+    2.1 解释
+        2.1.1 extension:
+            1.不能单独存在，必须有一个包含它的containing app;
+            2.有一个包含在containing app bundle中的独立bundle，后缀名是.appex;
+            3.需要用户手动激活，不同的extension激活方式也不同;
+                Today中的widget需要在Today中激活和关闭；
+                Custom keyboard需要在设置中进行相关设置；
+                Photo Editing需要在使用照片时在照片管理器中激活或关闭；
+                Storage Provider可以在选择文件时出现；
+                Share和Action可以在任何应用里被激活，但前提是开发者需要设置Activation Rules，以确定extension需要在合适出现。
+
+        2.1.2 containing app:包含extension的app
+            1.extension要想提交到AppStore，必须包含在一个containing app中提交，并且app的实现部分不能为空;
+            2.extension会随着containing app的安装而安装，同时随着containing app的卸载而卸载。
+
+        2.1.3 host app:调起extension的app，比如widget的host app是Today。
+
+3. 类型
+    Today、Share、Action、Photo Editing、Storage Provider、Custom keyboard
+
+4. 数据共享App Groups：
+
+    1. containing app 和 extension不能互相访问各自的文档，但可通过App Groups实现数据共享
+    2. App Groups支持的常用数据共享包括NSUserDefaults、NSFileManager、NSFileCoordinator、NSFilePresenter、UIPasteboard、KeyChain、NSURLSession等
+    3. extension 和 containing App都可以通过以下方式读写数据
+
+        1. 功能开启: 在extension 和 containing App 中开启group功能
+
+            TARGETS-->Extension-->Capabilities-->App Groups
+            TARGETS-->Containing App-->Capabilities-->App Groups
+
+        2. 通过UserDefault读写数据
+
+            // 通过groupID获取对应的group, 比如groupID为："group.Extension.YY.com"
+            let groupDefault = UserDefaults(suiteName: groupID)
+            let randomValue = arc4random_uniform(100)
+            // 设置
+            groupDefault?.set(randomValue, forKey: "randomvalue")
+            // 读取
+            let randomValue = groupDefault?.value(forKey: "randomvalue")
+
+        3. 通过FileManager读写数据
+
+            // 通过groupID获取group的path
+            let groupUrl = FileManager.default(forSecurityApplicationGroupIdentifier: groupID)
+            // 待读写文件的path
+            if let fileUrl = groupUrl?.appendingPathComponent("Library/Caches/good") {
+
+                // 写文件
+                let value =  "group write test \(arc4random_uniform(100))"
+                try? value.write(to: fileUrl, atomically: true, encoding: .utf8)
+
+                // 读文件
+                let value = try? String(contentsOf: fileUrl, encoding: .utf8)
+            }
+
+5. Today
+
+    1. 显示、隐藏extension
+        NCWidgetController.widgetController().setHasContent(true/false, forWidgetWithBundleIdentifier: extensionID)
+
+    2. 跳转到containing app
+
+        1. host app、extension、containing app之间通过 extensionContext 进行通讯，extension中是无法直接使用openURL的。
+
+        2. extension通过extensionContext，使用url scheme跳转到containing app
+            // "extensionScheme"是containing app中的一个url scheme
+            self.extensionContext?.open(URL(fileURLWithPath: "extensionScheme://"), completionHandler: nil)
+
+6. Action
+
+    1. info修改
+
+        NSExtension
+            NSExtensionMainStoryboard       string  MainInterface
+            NSExtensionPointIdentifier      string  com.apple.ui-services
+            NSExtensionAttributes
+                NSExtensionJavaScriptPreprocessingFile     string   Action      // js文件名
+                NSExtensionActivationRule
+                    NSExtensionActivationSupportsWebPageWithMaxCount    Number  1
+
+    2. Action.js
+        1. safari 与 extension 交互的桥梁
+        2. 实现
+
+            var Action = function() {};
+            Action.prototype = {
+
+            // 1. extension启动时调用
+            run: function(parameters) {
+
+                // 自定义该方法
+                // 给extension传递相关参数
+                parameters.completionFunction({"URL": document.URL, "title": document.title });
+            },
+
+            // 2. extension消失时调用
+            finalize: function(parameters) {
+                // 自定义该方法
+                // 获取extensionContext.completeRequest返回回来的参数，通过eval执行相关js
+                var customJS = parameters["customJS"];
+                eval(customJS);
+            }
+
+            };
+
+            var ExtensionPreprocessingJS = new Action
+
+    3. extension controller
+
+        //  获取参数
+        override func viewDidLoad() {
+            super.viewDidLoad()
+
+            // 1. extensionContext通讯：获取传过来的参数，执行相关操作
+            if let item = self.extensionContext?.inputItems.first as? NSExtensionItem {
+                if let provider = item.attachments?.first as? NSItemProvider {
+                    if provider.hasItemConformingToTypeIdentifier(kUTTypePropertyList as String) {
+                        provider.loadItem(forTypeIdentifier: kUTTypePropertyList as String, options: nil, completionHandler: { [unowned self](dict, error) in
+                            print(dict ?? "");
+                            let attach = dict as! NSDictionary
+                            let data = attach[NSExtensionJavaScriptPreprocessingResultsKey] as! NSDictionary
+                            self.pageUrl = data["URL"]! as! String
+                            self.pageTitle = data["title"]! as! String
+
+                            DispatchQueue.main.async {
+                            self.title = self.pageTitle
+                            self.textview.text = self.pageUrl
+                            }
+                        })
+                    }
+                }
+            }
+        }
+
+        //  退出extension
+        @IBAction func done() {
+
+            // 2.1 自定义返回的参数customJS
+            let jsDict = ["customJS": self.textview.text!]
+            let webDict: NSDictionary = [NSExtensionJavaScriptFinalizeArgumentKey: jsDict]
+            let provider = NSItemProvider(item: webDict, typeIdentifier: kUTTypePropertyList as String)
+            let item = NSExtensionItem()
+            item.attachments = [provider]
+
+            // 2.2 退出extension
+            self.extensionContext?.completeRequest(returningItems: [item], completionHandler: nil)
+        }
+
+

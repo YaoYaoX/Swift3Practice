@@ -14,8 +14,6 @@ class NoteViewController: UIViewController {
     var scrollView:UIScrollView?
     var label:UILabel?
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

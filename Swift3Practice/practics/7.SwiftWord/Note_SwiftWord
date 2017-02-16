@@ -1,0 +1,76 @@
+1. 存储属性
+
+    常量：当结构体被声明为常量时，它的属性也会声明为常量不可以修改；类为引用类型，常量类的属性依然可以修改
+
+
+2. 懒加载属性：lazy，只作用于变量，因为常量在初始化完成时必须有值；
+
+    只在第一次使用到的时候才初始化
+    多线程的时候无法保证只初始化一次
+
+3. 计算属性：不真正存储值，提供getter和可选的setter方法
+
+    var computedProperty: Point {
+        get {
+            return someValue
+        }
+
+        set (customNewValue) {
+            // 1. 可自己声明一个新值customNewValue，若省略了，默认隐含一个新值newValue
+            做相关设置
+        }
+        or
+        set{
+            // 2. 默认隐含一个新值newValue
+            做相关设置
+        }
+    }
+
+    var computedProperty: Point {
+        // 只有getter，没有setter
+        return someValue
+    }
+
+4. 属性监视器：作用于任何存储属性，lazy属性除外
+
+    var totalSteps: Int = 0 {
+
+        willSet(newTotalSteps) {
+        // 隐含实例：newValue
+        }
+
+        didSet(oldTotalSteps){
+        // 隐含实例：oldValue
+        }
+    }
+
+5. 全局常量变量都是lazily，不需要用lazy标记，局部变量常量都不能是lazily
+
+6. 类属性：static标记，类的computed type properties用class标记以便被子类重写
+
+7. override
+    1. stored or computed都属性都可以被override，可子类区分不出是stored还是computed，但子类保证重写的属性name和type一致就行
+    2. read-only属性可重写成read-write属性，只要getter setter都实现了就行，如果提供了setter，getter也必须重写，或调用super.property
+    3. read-write属性不可以重写成read-only属性
+
+
+8. 属性监听器willSet、didSet
+    1. 初始值不会触发监听器，在init之前属性就有值
+    2. 对于某个属性，子类、父类都有添加observer的话,两者的监听器都会触发，调用顺序是sub.willSet -> super.willSet -> super.didSet -> sub.DidSet
+
+9. 横屏
+
+    override var shouldAutorotate: Bool{
+        return false
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
+        return .landscape
+    }
+
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation{
+        return .landscapeLeft
+    }
+
+
+

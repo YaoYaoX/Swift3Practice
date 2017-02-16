@@ -1,0 +1,8 @@
+1. MKAnnotation： protocol：地图上的点
+2. MKAnnotationView：MKPinAnnotationView：点在地图上显示的view
+3. callout：点击MKAnnotationView后显示的相关信息view，需设置MKAnnotationView.canShowCallout = true
+4. callout: 特殊的AnnotationView
+5. func mapView(_ mapView:, viewFor annotation:) -> MKAnnotationView? ，如果返回nil，由系统提供默认MKAnnotationView
+6. 自定义
+    1. MKAnnotationView:修改相关的图片等等
+    2. callout：didSelected的时候添加一个Annotation，位置与被点击的点一致，view为自定义的一个MKAnnotationView

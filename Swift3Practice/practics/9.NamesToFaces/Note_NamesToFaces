@@ -1,0 +1,32 @@
+1. 获取唯一标识码
+
+    let uniqueID  = UUID().uuidString
+
+2. archiver
+
+    // 归档为data
+    let data = NSKeyedArchiver.archivedData(withRootObject: datasource)
+
+    // 解档：data转为object: 存的是什么类型，就会解档成什么类型
+    let object = NSKeyedUnarchiver.unarchiveObject(with: listData) as? [NamesToFacesModel]
+
+3. NSCoding协议
+
+    // 必须加上required要求子类重写，除非已明确没有子类如final，则可以不加
+    required init?(coder aDecoder: NSCoder) {
+        // 解档
+        name = aDecoder.decodeObject(forKey: "name") as! String
+        imageName = aDecoder.decodeObject(forKey: "imageName") as! String
+    }
+
+    func encode(with aCoder: NSCoder) {
+        // 归档
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(imageName, forKey: "imageName")
+    }
+
+4. UserDefaults
+
+    // app启动时，自动加载UserDefaults文件，所以大文件最好不要存在UserDefaults中，避免启动过慢
+    UserDefaults.standard.setValue(data, forKey: "key")
+    let listData = UserDefaults.standard.object(forKey: "key") as? Data

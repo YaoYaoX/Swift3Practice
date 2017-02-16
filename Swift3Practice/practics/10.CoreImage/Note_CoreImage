@@ -1,0 +1,22 @@
+
+1. objc中文介绍：https://objccn.io/issue-21-6/
+
+2. 滤镜CIFilter：特定的一些图片效果，ios有内置多种滤镜，通过滤镜名获取；也可自定义
+
+    CIFilter.filterNames(inCategory: kCICategoryBlur)
+
+3. 滤镜的参数：输入参数、输出参数、参数具体信息
+
+    filter.inputKeys
+    filter.outputKeys
+    filter.attributes
+    kvc 设置参数
+    滤镜可以有多个图片作为输入，也可以没有
+
+4. 上下文CIContext：绘制工具，创建的花销很大，一般属性保存重复使用
+
+5. 获取处理后的图片
+
+    // 图片，图片尺寸
+    let outputImg = filter.outputImage
+    let newImg = context.createCGImage(outputImg!, from: outputImg!.extent)

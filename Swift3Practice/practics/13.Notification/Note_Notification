@@ -1,0 +1,78 @@
+活久见的重构 - iOS 10 UserNotifications 框架解析（https://onevcat.com/2016/08/notification/）
+
+1. 通知授权
+    UNUserNotificationCenter.current().requestAuthorization(options:[.alert, .badge, .sound]) { (granted, error) in code...}
+
+2. 远程推送，请求deviceToken
+    // 请求获取deviceToken
+    UIApplication.shared.registerForRemoteNotifications()
+
+    // 成功回调
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print(hexString(data: deviceToken))
+    }
+
+    // 失败回调
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error)
+    }
+
+3. 获取用户对通知的当前设置
+    UNUserNotificationCenter.current().getNotificationSettings { (notiSetting:UNNotificationSettings) in code...}
+
+4. 发送通知
+    // 内容体
+    let content = UNMutableNotificationContent()
+    content.title = "title"
+    content.body = "this is body"
+    content.sound = UNNotificationSound.default()
+    content.subtitle = "this is subtitle"
+    // 添加附带品，图片／视频，只显示第一个
+    if let url = Bundle.main.url(forResource: "notificationTest", withExtension: "png") {
+        if let image = try? UNNotificationAttachment(identifier: "image", url: url, options:nil){
+            content.attachments = [image]
+        }
+    }
+
+    // 添加action，前提是center先注册category，见5
+    content.categoryIdentifier = "category2"
+
+    // 显示的时间,三种 UNCalendarNotificationTrigger、UNLocationNotificationTrigger、UNTimeIntervalNotificationTrigger
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+    // 请求体
+    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+    // 加入通知，后台时，由用户设置的方式显示；前台时，代理方法决定是否显示
+    UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+
+5. 注册category
+    // 生成action
+    let action1 = UNNotificationAction(identifier: "action1", title: "action1", options: .foreground)
+    let action2 = UNNotificationAction(identifier: "action2", title: "action2", options: .foreground)
+    // 生成category
+    let category = UNNotificationCategory(identifier: "category1", actions: [action1, action2], intentIdentifiers: [])
+
+    // 多个category
+    ...
+    let category2 = ...
+
+    // 添加categories
+    UNUserNotificationCenter.current().setNotificationCategories([category,category2])
+
+6. 通知的代理：UNUserNotificationCenterDelegate
+
+    UNUserNotificationCenter.current().delegate = self;
+
+    // 操作通知的回调
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        code...
+        completionHandler()
+    }
+
+    // app在前台时，通知的展示与否，不实现该方法的话默认不展示
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // 展示
+        completionHandler([.alert, .sound])
+        // 不展示
+        completionHandler([])
+    }
+
