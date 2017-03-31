@@ -1,0 +1,46 @@
+1. HTML:超文本标记语言 (Hyper Text Markup Language)
+    1. 不是一种编程语言，而是一种标记语言 (markup language)
+    2. 标签:由尖括号包围的关键词，比如 <html>
+        1. 成对出现的，比如 <b> 和 </b>
+        2. 第一个标签是开始标签，第二个标签是结束标签
+        3. 开始和结束标签也被称为开放标签和闭合标签
+
+2. HTML样式：属性style
+    1. 在style里面定义各种样式-->颜色、字体、大小等等
+    2. 原先定义的与样式相关的属性或标签，建议不用，改为用style实现
+
+3. 响应式Web设计（Responsive Web Design）:能够以可变尺寸传递网页
+
+4. URL编码
+    1. 只能使用ASCII字符集来通过因特网进行发送。
+    2. URL不能包含空格，通常使用 + 来替换空格。
+
+5. XHTML 与 HTML 相比最重要的区别：
+    1. 文档结构
+        XHTML DOCTYPE 是强制性的
+        <html> 中的 XML namespace 属性是强制性的(xmlns为文档规定 xml 命名空间)
+        <html>、<head>、<title> 以及 <body> 也是强制性的
+    2. 元素语法
+        XHTML 元素必须正确嵌套
+        XHTML 元素必须始终关闭
+        XHTML 元素必须小写
+        XHTML 文档必须有一个根元素
+    3. 属性语法
+        XHTML 属性必须使用小写
+        XHTML 属性值必须用引号包围
+        XHTML 属性最小化也是禁止的
+   4. 如何从 HTML 转换到 XHTML
+        向每张页面的第一行添加 XHTML <!DOCTYPE>
+        向每张页面的 html 元素添加 xmlns 属性
+        把所有元素名改为小写
+        关闭所有空元素
+        把所有属性名改为小写
+        为所有属性值加引号
+    5. XHTML 元素 - 语法规则
+        XHTML 元素必须正确嵌套
+        XHTML 元素必须始终关闭
+        XHTML 元素必须小写
+        XHTML 文档必须有一个根元素
+        XHTML 属性必须使用小写
+        XHTML 属性值必须用引号包围
+        XHTML 属性禁止简写

@@ -14,7 +14,9 @@
 		250B5D061E151DC700E2FB2F /* NamesToFacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B5D051E151DC700E2FB2F /* NamesToFacesController.swift */; };
 		250B5D091E151EFF00E2FB2F /* NamesToFacesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250B5D071E151EFF00E2FB2F /* NamesToFacesCell.swift */; };
 		250B5D0A1E151EFF00E2FB2F /* NamesToFacesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250B5D081E151EFF00E2FB2F /* NamesToFacesCell.xib */; };
+		2512D0A31E713B7800509644 /* Note_Web in Resources */ = {isa = PBXBuildFile; fileRef = 2512D0A21E713B7800509644 /* Note_Web */; };
 		2523B1791E5468EB0003CD5E /* rmb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2523B1781E5468EB0003CD5E /* rmb.jpg */; };
+		252553121E56F25F00F0563F /* Note_SafariSpotlight in Resources */ = {isa = PBXBuildFile; fileRef = 252553111E56F25F00F0563F /* Note_SafariSpotlight */; };
 		2529000B1E2483D700813690 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2529000A1E2483D700813690 /* NotificationCenter.framework */; };
 		2529000E1E2483D700813690 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2529000D1E2483D700813690 /* TodayViewController.swift */; };
 		252900111E2483D700813690 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2529000F1E2483D700813690 /* MainInterface.storyboard */; };
@@ -23,6 +25,7 @@
 		2529001D1E24878F00813690 /* ExtensionController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2529001C1E24878F00813690 /* ExtensionController.storyboard */; };
 		252900211E24BCE500813690 /* Note_Extension in Resources */ = {isa = PBXBuildFile; fileRef = 252900201E24BCE500813690 /* Note_Extension */; };
 		252B1AD81E1CDD0B005B0470 /* Note_CoreImage in Resources */ = {isa = PBXBuildFile; fileRef = 252B1AD71E1CDD0B005B0470 /* Note_CoreImage */; };
+		253D2C8A1E5ACF4F00C77337 /* Note_DesignPatterns in Resources */ = {isa = PBXBuildFile; fileRef = 253D2C891E5ACF4F00C77337 /* Note_DesignPatterns */; };
 		257AD1FA1E4AC6E7007ADE08 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257AD1F91E4AC6E7007ADE08 /* MapViewController.swift */; };
 		257AD1FC1E4AC731007ADE08 /* Capital.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257AD1FB1E4AC731007ADE08 /* Capital.swift */; };
 		257AD1FE1E4AF47A007ADE08 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 257AD1FD1E4AF47A007ADE08 /* MapKit.framework */; };
@@ -116,7 +119,9 @@
 		250B5D051E151DC700E2FB2F /* NamesToFacesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesToFacesController.swift; sourceTree = "<group>"; };
 		250B5D071E151EFF00E2FB2F /* NamesToFacesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamesToFacesCell.swift; sourceTree = "<group>"; };
 		250B5D081E151EFF00E2FB2F /* NamesToFacesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NamesToFacesCell.xib; sourceTree = "<group>"; };
+		2512D0A21E713B7800509644 /* Note_Web */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Note_Web; sourceTree = "<group>"; };
 		2523B1781E5468EB0003CD5E /* rmb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rmb.jpg; sourceTree = "<group>"; };
+		252553111E56F25F00F0563F /* Note_SafariSpotlight */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Note_SafariSpotlight; sourceTree = "<group>"; };
 		252900081E2483D700813690 /* TodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2529000A1E2483D700813690 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		2529000D1E2483D700813690 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +133,7 @@
 		2529001F1E24B94E00813690 /* TodayExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayExtension.entitlements; sourceTree = "<group>"; };
 		252900201E24BCE500813690 /* Note_Extension */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Note_Extension; sourceTree = "<group>"; };
 		252B1AD71E1CDD0B005B0470 /* Note_CoreImage */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Note_CoreImage; sourceTree = "<group>"; };
+		253D2C891E5ACF4F00C77337 /* Note_DesignPatterns */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Note_DesignPatterns; sourceTree = "<group>"; };
 		257AD1F91E4AC6E7007ADE08 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		257AD1FB1E4AC731007ADE08 /* Capital.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Capital.swift; sourceTree = "<group>"; };
 		257AD1FD1E4AF47A007ADE08 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -237,6 +243,24 @@
 			path = practics/9.NamesToFaces;
 			sourceTree = "<group>";
 		};
+		2512D0A11E713B6D00509644 /* 16.Web */ = {
+			isa = PBXGroup;
+			children = (
+				2512D0A21E713B7800509644 /* Note_Web */,
+			);
+			name = 16.Web;
+			path = practics/16.Web;
+			sourceTree = "<group>";
+		};
+		252553101E56F22100F0563F /* other */ = {
+			isa = PBXGroup;
+			children = (
+				252553111E56F25F00F0563F /* Note_SafariSpotlight */,
+			);
+			name = other;
+			path = practics/other;
+			sourceTree = "<group>";
+		};
 		252900091E2483D700813690 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,6 +291,15 @@
 			);
 			name = 11.Extension;
 			path = practics/11.Extension;
+			sourceTree = "<group>";
+		};
+		253D2C851E5AC36A00C77337 /* 15.Design patterns */ = {
+			isa = PBXGroup;
+			children = (
+				253D2C891E5ACF4F00C77337 /* Note_DesignPatterns */,
+			);
+			name = "15.Design patterns";
+			path = "practics/15.Design patterns";
 			sourceTree = "<group>";
 		};
 		257AD1F81E4AC6D3007ADE08 /* 12.Map */ = {
@@ -429,6 +462,8 @@
 		25D366E11DF8F9DC006D9D7E /* Swift3Practice */ = {
 			isa = PBXGroup;
 			children = (
+				2512D0A11E713B6D00509644 /* 16.Web */,
+				253D2C851E5AC36A00C77337 /* 15.Design patterns */,
 				258EA9BE1E545162005DE18E /* 14.CoreGraphics */,
 				259D35121E52D42600525596 /* 13.Notification */,
 				257AD1F81E4AC6D3007ADE08 /* 12.Map */,
@@ -444,6 +479,7 @@
 				258E17691E0D19620031C1AE /* 2.GuessCountry */,
 				258E17601E0D19100031C1AE /* 1.PhotoViewer */,
 				25EEDFA11DFFCC8500D98B2E /* main */,
+				252553101E56F22100F0563F /* other */,
 			);
 			path = Swift3Practice;
 			sourceTree = "<group>";
@@ -618,8 +654,11 @@
 				252900211E24BCE500813690 /* Note_Extension in Resources */,
 				25A3E9AE1E1B517900AA9354 /* Note_NamesToFaces in Resources */,
 				258E17811E0D1A230031C1AE /* Note_VFL in Resources */,
+				252553121E56F25F00F0563F /* Note_SafariSpotlight in Resources */,
 				252B1AD81E1CDD0B005B0470 /* Note_CoreImage in Resources */,
+				2512D0A31E713B7800509644 /* Note_Web in Resources */,
 				259A2CBC1E110B9A00BD9B74 /* Note_SwiftWord in Resources */,
+				253D2C8A1E5ACF4F00C77337 /* Note_DesignPatterns in Resources */,
 				258E177B1E0D19960031C1AE /* Note_SpellWord in Resources */,
 				258E17671E0D19100031C1AE /* PhotoViewer.bundle in Resources */,
 				25D366EA1DF8F9DC006D9D7E /* Assets.xcassets in Resources */,

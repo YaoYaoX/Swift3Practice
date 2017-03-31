@@ -1,0 +1,41 @@
+1. Safari: 不用webview，而是使用嵌入在app中的safari加载网页
+    import SafariServices
+    SFSafariViewController
+
+2. spotlight：添加删除相关记录，以便在sportlight中搜索时能显示
+
+
+import CoreSpotlight
+import MobileCoreServices
+
+func index(item: Int) {
+
+    let project = projects[item]
+    // 相关信息
+    let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+    attributeSet.title = project[0]
+    attributeSet.contentDescription = project[1]
+
+    // item，Identifiers标识
+    let item = CSSearchableItem(uniqueIdentifier: "\(item)", domainIdentifier: "com.hackingwithswift", attributeSet: attributeSet)
+
+    // 添加
+    CSSearchableIndex.default().indexSearchableItems([item]) { error in
+        if let error = error {
+            print("Indexing error: \(error.localizedDescription)")
+        } else {
+            print("Search item successfully indexed!")
+        }
+    }
+}
+
+func deindex(item: Int) {
+    // 通过Identifiers删除
+    CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: ["\(item)"]) { error in
+        if let error = error {
+            print("Deindexing error: \(error.localizedDescription)")
+        } else {
+            print("Search item successfully removed!")
+        }
+    }
+}
